@@ -8,29 +8,11 @@
 
 //ip API: http://ip-api.com/docs/api:json
 
-var apiLink = "http://api.openweathermap.org/data/2.5/weather?q=";
-var location = "Toronto";
-var apiKey = "&APPID=4ecd95152125036caf092f9322ecc291";
-
-var weatherJSON = apiLink + location + apiKey;
-console.log("weatherJSON");
-
 //icon image associated with weather -> can use your own
-//var googlePos = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
-
-//used for Google Maps API to convert lat/lon to city, have to get key
-var geocoder;
-
-//check for geolocation enabled/supported
-if (navigator.geolocation){
-	console.log("Geolocation is supported~");
-} else {
-	console.log("Awww, geolocationis not supported for this browser yet.");
-}
 
 //callback with lat/lon passed?
 //on load, get geolocation of user 
-window.onload = function() {
+window.onload = function getGeoLatLong() {
 	var startPos;
 	var geoOptions = { 
 		//if can't get data, timeout 
@@ -55,12 +37,24 @@ window.onload = function() {
 };
 
 
-var gMapLink = "https://maps.googleapis.com/maps/api/geocode/json?latlng=";
-//var testLatitude, testLongitude;
-var testLatitude = 40.714224;
-var testLongitude = -73.961452;
-var gMapKey = "&key="; 
+//check for geolocation enabled/supported
+if (navigator.geolocation){
+	console.log("Geolocation is supported~");
+} else {
+	console.log("Awww, geolocation is not supported for this browser yet.");
+}
 
+//ip API: http://ip-api.com/docs/api:json
+//function getIpApi(navigator.geolocation){
+  //callback that tells next function to run
+	//getWeather(callback);
+//}
+
+//var apiLink = "http://api.openweathermap.org/data/2.5/weather?q=";
+//var apiKey = "&APPID=4ecd95152125036caf092f9322ecc291";
+
+//var weatherJSON = apiLink + location + apiKey;
+//console.log("weatherJSON");
 
 
 //function updateWeather(weather){
