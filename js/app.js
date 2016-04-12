@@ -40,18 +40,13 @@ xmlhttp.send();
 
 // Function to work with Location API to get Longitude, Latitude, City and State to bed used with the weather API
 var getLocation = function (response) {
-	var city = response.city;
 	var lat = response.lat;
 	var lon = response.lon;
 	url = apiLink + "lat=" + lat + "&lon=" + lon + "&units=" + apiKey;
+	getWeather(url);
 }
 
-//ip API: http://ip-api.com/docs/api:json
-//function getIpApi(navigator.geolocation){
-  //callback that tells next function to run
-	//getWeather(callback);
-//}
-
+function get
 
 
 
