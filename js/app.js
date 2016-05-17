@@ -13,23 +13,45 @@
 
 //icon image associated with weather -> can use your own
 
-var apiLink = "http://api.openweathermap.org/data/2.5/weather?q=";
-var apiKey = "&APPID=4ecd95152125036caf092f9322ecc291";
+//var apiLink = "http://api.openweathermap.org/data/2.5/weather?q=";
+//var apiKey = "&APPID=4ecd95152125036caf092f9322ecc291";
 
 //var weatherJSON = apiLink + location + apiKey;
 //console.log("weatherJSON");
 
 var temp;
-var location;
+var loc;
 var icon;
 var humidity;
 var wind;
 var direction;
 
-window.onload =  function() {
+function update(weather){
+  wind.innerHTML =  weather.wind;
+  direction.innerHTML = weather.direction;
+  humidity.innerHTML = weather.humidity;
+  loc.innerHTML = weather.loc;
+  temp.innerHTML = weather.temp;
+  icon.src = "imgs/codes/" + weather.icon + ".png";
+}
+
+//on load
+window.onload = function() {
   temp = document.getElementById("temperature");
-  location = document.getElementById("location");
+  loc = document.getElementById("location");
   icon = document.getElementById("icon");
+  humidity =  document.getElementById("humidity");
   wind = document.getElementById("wind");
-  direction = document.getElementById("direction"); 
+  direction = document.getElementById("direction");
+
+  var weather = [];
+  weather.wind = 3.5;
+  weather.direction = "N";
+  weather.humidity = 35;
+  weather.location =  "Toronto";
+  weather.temp = 45;
+  weather.icon = 200;
+
+  //pass in weather conditions
+  update(weather);
 }
