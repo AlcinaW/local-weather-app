@@ -19,6 +19,11 @@
 //var weatherJSON = apiLink + location + apiKey;
 //console.log("weatherJSON");
 
+function updateByLatLon(lat, lon){
+
+}
+
+var APPID = "4ecd95152125036caf092f9322ecc291";
 var temp;
 var loc;
 var icon;
@@ -44,7 +49,7 @@ window.onload = function() {
   wind = document.getElementById("wind");
   direction = document.getElementById("direction");
 
-  var weather = [];
+  var weather = {};
   weather.wind = 3.5;
   weather.direction = "N";
   weather.humidity = 35;
