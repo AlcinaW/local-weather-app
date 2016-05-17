@@ -20,19 +20,6 @@
 //var weatherJSON = apiLink + location + apiKey;
 //console.log("weatherJSON");
 
-function updateByLatLon(lat, lon){
-  var url = "http://api.openweathermap.org/data/2.5/weather" + "?lat=" + lat + "&lon=" + lon + "&APPID=" + APPID;
-  //send request function that takes in url
-  sendRequest(url);
-}
-
-function sendRequest(url){
-  var XMLHttpRequest();
-  //callback, do somethng when get info back
-  xml.http.onreadystatechange = function(){
-    
-  }
-}
 
 var APPID = "4ecd95152125036caf092f9322ecc291";
 var temp;
@@ -41,9 +28,42 @@ var icon;
 var humidity;
 var wind;
 var direction;
+var weather;
+
+function updateByLatLon(lat, lon){
+  var url = "http://api.openweathermap.org/data/2.5/weather" + "?lat=" + lat + "&lon=" + lon + "&APPID=" + APPID;
+  //send request function that takes in url
+  sendRequest(url);
+}
+
+function sendRequest(url){
+  var xmlhttp = new XMLHttpRequest();
+  //callback, do somethng when get info back
+  xmlhttp.onreadystatechange = function(){
+    //if received a package back (status: 4) , and successful (status: 200)
+    if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+      //comes in as JSON, then parse the response text using built-in JSON parsing in JS
+      var data = JSON.parse(xmlhttp.responseText);
+      //weather object
+      var weather = {};
+      weather.icon = data.weather[0].id;
+      weather.humidity = data.main.humidity;
+      weather.wind = data.wind.speed;
+      weather.direction = data.wind.deg;
+      weather.loc = data.name;
+      weather.temp = data.main.temp;
+      //after object created, pass into function
+      update(weather);
+      //then update app
+    }
+  };
+  //send it out
+  xmlhttp.open("GET", url, true);
+  xmlhttp.send();
+}
 
 function update(weather){
-  wind.innerHTML =  weather.wind;
+  wind.innerHTML = weather.wind;
   direction.innerHTML = weather.direction;
   humidity.innerHTML = weather.humidity;
   loc.innerHTML = weather.loc;
@@ -60,14 +80,7 @@ window.onload = function() {
   wind = document.getElementById("wind");
   direction = document.getElementById("direction");
 
-  var weather = {};
-  weather.wind = 3.5;
-  weather.direction = "N";
-  weather.humidity = 35;
-  weather.location =  "Toronto";
-  weather.temp = 45;
-  weather.icon = 200;
-
+  //pass in params, ex ZIP code or lat/lon
+  updateByLatLon(35, 139);
   //pass in weather conditions
-  update(weather);
 }
