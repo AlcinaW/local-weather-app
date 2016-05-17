@@ -15,12 +15,23 @@
 
 //var apiLink = "http://api.openweathermap.org/data/2.5/weather?q=";
 //var apiKey = "&APPID=4ecd95152125036caf092f9322ecc291";
+//?lat=35&lon=139
 
 //var weatherJSON = apiLink + location + apiKey;
 //console.log("weatherJSON");
 
 function updateByLatLon(lat, lon){
+  var url = "http://api.openweathermap.org/data/2.5/weather" + "?lat=" + lat + "&lon=" + lon + "&APPID=" + APPID;
+  //send request function that takes in url
+  sendRequest(url);
+}
 
+function sendRequest(url){
+  var XMLHttpRequest();
+  //callback, do somethng when get info back
+  xml.http.onreadystatechange = function(){
+    
+  }
 }
 
 var APPID = "4ecd95152125036caf092f9322ecc291";
