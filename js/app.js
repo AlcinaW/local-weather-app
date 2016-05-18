@@ -49,9 +49,9 @@ function sendRequest(url){
       weather.icon = data.weather[0].id;
       weather.humidity = data.main.humidity;
       weather.wind = data.wind.speed;
-      weather.direction = data.wind.deg;
+      weather.direction = degreesToDirection(data.wind.deg);
       weather.loc = data.name;
-      weather.temp = data.main.temp;
+      weather.temp = kToC(data.main.temp);
       //after object created, pass into function
       update(weather);
       //then update app
@@ -62,13 +62,27 @@ function sendRequest(url){
   xmlhttp.send();
 }
 
+//kelvin to celsius
+function kToC(k){
+  return Math.round(k - 273.15);
+}
+//kelvin to fahrenheit
+function kToF(k){
+  return Math.round(k*(9/5)-459.67);
+}
+function degreesToDirection(degrees){
+  var range =  360/8;
+  var low = 360 - range/2;
+  var high = (low + range) % 360;
+  
+}
 function update(weather){
   wind.innerHTML = weather.wind;
   direction.innerHTML = weather.direction;
   humidity.innerHTML = weather.humidity;
   loc.innerHTML = weather.loc;
   temp.innerHTML = weather.temp;
-  icon.src = "imgs/codes/" + weather.icon + ".png";
+  icon.src = "img/codes/" + weather.icon + ".png";
 }
 
 //on load
