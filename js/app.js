@@ -71,10 +71,18 @@ function kToF(k){
   return Math.round(k*(9/5)-459.67);
 }
 function degreesToDirection(degrees){
-  var range =  360/8;
+  var range =  360/16;
   var low = 360 - range/2;
   var high = (low + range) % 360;
-  
+  var angles = ["N", "NNE", "ENE", "E", "ESE", "SE", "SSE", "S", "SSW", "SW", "WSW", "W", "WNW", "NW", "NNW", "NE"];
+  for (i in angles){
+    if (degrees >=  low && degrees < high){
+      return angles[i];
+    }
+    low = (low + range) % 360;
+    high = (high + range) % 360;
+  }
+  return "N";
 }
 function update(weather){
   wind.innerHTML = weather.wind;
@@ -95,6 +103,6 @@ window.onload = function() {
   direction = document.getElementById("direction");
 
   //pass in params, ex ZIP code or lat/lon
-  updateByLatLon(35, 139);
+  updateByLatLon(30, 129);
   //pass in weather conditions
 }
