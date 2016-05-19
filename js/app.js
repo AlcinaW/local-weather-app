@@ -29,8 +29,41 @@ var humidity;
 var wind;
 var direction;
 var weather;
+// var lat;
+// var lon;
 
-function updateByLatLon(lat, lon){
+// function updateByLatLon(lat, lon){
+//   var url = "http://api.openweathermap.org/data/2.5/weather" + "?lat=" + lat + "&lon=" + lon + "&APPID=" + APPID;
+  //send request function that takes in url
+//   sendRequest(url);
+// }
+
+//on load
+window.onload = function() {
+  temp = document.getElementById("temperature");
+  loc = document.getElementById("location");
+  icon = document.getElementById("icon");
+  humidity =  document.getElementById("humidity");
+  wind = document.getElementById("wind");
+  direction = document.getElementById("direction");
+
+  //pass in params, ex ZIP code or lat/lon
+  //updateByLatLon(30, 129);
+  //pass in weather conditions
+  if (!navigator.geolocation) {
+    alert("Your browser does not support geolocation!. Sadface. >x<");
+  }
+  if (navigator.geolocation){
+    navigator.geolocation.getCurrentPosition(getPosition);
+  } else {
+    var lat = window.prompt("Please enable geolocation, or enter your latitude. Latitude:");
+    var lon =  window.prompt("Longitude:");
+    updateByLatLon(lat, lon);
+  }
+}
+
+
+function updateByGeolocation(lat, lon){
   var url = "http://api.openweathermap.org/data/2.5/weather" + "?lat=" + lat + "&lon=" + lon + "&APPID=" + APPID;
   //send request function that takes in url
   sendRequest(url);
@@ -93,16 +126,7 @@ function update(weather){
   icon.src = "img/codes/" + weather.icon + ".png";
 }
 
-//on load
-window.onload = function() {
-  temp = document.getElementById("temperature");
-  loc = document.getElementById("location");
-  icon = document.getElementById("icon");
-  humidity =  document.getElementById("humidity");
-  wind = document.getElementById("wind");
-  direction = document.getElementById("direction");
-
-  //pass in params, ex ZIP code or lat/lon
-  updateByLatLon(30, 129);
-  //pass in weather conditions
+function getPosition(position){
+  updateByGeolocation(position.coords.latitude, position.coords.longitude);
+  console.log(position.coords.latitude);
 }
