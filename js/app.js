@@ -50,16 +50,21 @@ window.onload = function() {
   //pass in params, ex ZIP code or lat/lon
   //updateByLatLon(30, 129);
   //pass in weather conditions
-  if (!navigator.geolocation) {
-    alert("Your browser does not support geolocation!. Sadface. >x<");
-  }
   if (navigator.geolocation){
-    navigator.geolocation.getCurrentPosition(getPosition);
+    navigator.geolocation.getCurrentPosition(showPosition);
   } else {
     var lat = window.prompt("Please enable geolocation, or enter your latitude. Latitude:");
     var lon =  window.prompt("Longitude:");
     updateByLatLon(lat, lon);
+        alert("Your browser does not support geolocation! >x<");
   }
+}
+
+function showPosition(position){
+  var lat = position.coords.latitude;
+  var lon = position.coords.longitude;
+  updateByGeolocation(lat, lon);
+  console.log(position.coords.latitude);
 }
 
 
@@ -124,9 +129,4 @@ function update(weather){
   loc.innerHTML = weather.loc;
   temp.innerHTML = weather.temp;
   icon.src = "img/codes/" + weather.icon + ".png";
-}
-
-function getPosition(position){
-  updateByGeolocation(position.coords.latitude, position.coords.longitude);
-  console.log(position.coords.latitude);
 }
