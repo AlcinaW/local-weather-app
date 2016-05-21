@@ -127,6 +127,7 @@ function sendRequest(url){
       weather.temp = kToC(data.main.temp);
       //after object created, pass into function
       update(weather);
+      console.log(weather);
       //then update app
     }
   };
