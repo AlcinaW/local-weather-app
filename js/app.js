@@ -7,11 +7,6 @@
 //API key: 4ecd95152125036caf092f9322ecc291 (don't expose API keys normally)
 //JSON format
 
-//If using IP API, won't need to request browser permission for geolocation?
-//callback with lat/lon passed?
-//on load, get geolocation of user
-// window.onload = function getGeoLatLong() {
-
 //icon image associated with weather -> can use your own
 
 //var apiLink = "http://api.openweathermap.org/data/2.5/weather?q=";
@@ -21,6 +16,9 @@
 //var weatherJSON = apiLink + location + apiKey;
 //console.log("weatherJSON");
 
+// weather icons: https://erikflowers.github.io/weather-icons/
+//weather api list: https://erikflowers.github.io/weather-icons/api-list.html
+//animate SVG: http://webdesign.tutsplus.com/tutorials/how-to-animate-festive-svg-icons-with-css--webdesign-17658
 
 var APPID = "4ecd95152125036caf092f9322ecc291";
 var temp;
@@ -47,6 +45,7 @@ window.onload = function() {
   humidity =  document.getElementById("humidity");
   wind = document.getElementById("wind");
   direction = document.getElementById("direction");
+  clouds =  document.getElementById("cloudiness");
 
   //pass in params, ex ZIP code or lat/lon
   //updateByLatLon(30, 129);
@@ -125,6 +124,7 @@ function sendRequest(url){
       weather.direction = degreesToDirection(data.wind.deg);
       weather.loc = data.name;
       weather.temp = kToC(data.main.temp);
+      weather.clouds = data.clouds.all;
       //after object created, pass into function
       update(weather);
       console.log(weather);
@@ -164,5 +164,6 @@ function update(weather){
   humidity.innerHTML = weather.humidity;
   loc.innerHTML = weather.loc;
   temp.innerHTML = weather.temp;
+  clouds.innerHTML = weather.clouds;
   icon.src = "img/codes/" + weather.icon + ".png";
 }
