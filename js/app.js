@@ -13,9 +13,6 @@
 //var apiKey = "&APPID=4ecd95152125036caf092f9322ecc291";
 //?lat=35&lon=139
 
-//var weatherJSON = apiLink + location + apiKey;
-//console.log("weatherJSON");
-
 // weather icons: https://erikflowers.github.io/weather-icons/
 //weather api list: https://erikflowers.github.io/weather-icons/api-list.html
 //animate SVG: http://webdesign.tutsplus.com/tutorials/how-to-animate-festive-svg-icons-with-css--webdesign-17658
@@ -28,14 +25,6 @@ var humidity;
 var wind;
 var direction;
 var weather;
-// var lat;
-// var lon;
-
-// function updateByLatLon(lat, lon){
-//   var url = "http://api.openweathermap.org/data/2.5/weather" + "?lat=" + lat + "&lon=" + lon + "&APPID=" + APPID;
-  //send request function that takes in url
-//   sendRequest(url);
-// }
 
 //on load
 window.onload = function() {
@@ -48,26 +37,15 @@ window.onload = function() {
   clouds =  document.getElementById("cloudiness");
 
   //pass in params, ex ZIP code or lat/lon
-  //updateByLatLon(30, 129);
   //pass in weather conditions
   if (navigator.geolocation) {
     console.log('Geolocation is supported!');
   } else {
     alert("Geolocation is not supported for this browser/OS version yet. Sadface~ >w<");
-    console.log('Geolocation is not supported for this Browser/OS version yet.');
+    console.log('Geolocation is not supported for this browser/OS version yet. Sadface~ >w<');
   }
-  //if (navigator.geolocation){
-    //console.log("find meeeee");
     navigator.geolocation.getCurrentPosition(success, error, options);
-  //} else {
-    //var lat = window.prompt("Please enable geolocation, or enter your latitude. Latitude:");
-    //var lon =  window.prompt("Longitude:");
-    //updateByLatLon(lat, lon);
-    //alert("Your browser does not support geolocation! >x<");
-  //}
-
 }
-
 
 var options = {
   enableHighAccuracy: true,
@@ -86,21 +64,12 @@ function success(position) {
   var lat = crd.latitude;
   var lon = crd.longitude;
   updateByGeolocation(lat, lon);
-  //console.log(position.coords.latitude);
 };
 
 function error(err) {
   console.warn('ERROR(' + err.code + '): ' + err.message);
 
 };
-
-// function showPosition(position){
-//   var lat = position.coords.latitude;
-//   var lon = position.coords.longitude;
-//   updateByGeolocation(lat, lon);
-//   console.log(position.coords.latitude);
-// }
-
 
 function updateByGeolocation(lat, lon){
   var url = "http://api.openweathermap.org/data/2.5/weather" + "?lat=" + lat + "&lon=" + lon + "&APPID=" + APPID;
@@ -140,10 +109,12 @@ function sendRequest(url){
 function kToC(k){
   return Math.round(k - 273.15);
 }
+
 //kelvin to fahrenheit
 function kToF(k){
   return Math.round(k*(9/5)-459.67);
 }
+
 function degreesToDirection(degrees){
   var range =  360/16;
   var low = 360 - range/2;
@@ -158,6 +129,7 @@ function degreesToDirection(degrees){
   }
   return "N";
 }
+
 function update(weather){
   wind.innerHTML = weather.wind;
   direction.innerHTML = weather.direction;
