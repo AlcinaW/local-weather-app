@@ -17,18 +17,25 @@
 //weather api list: https://erikflowers.github.io/weather-icons/api-list.html
 //animate SVG: http://webdesign.tutsplus.com/tutorials/how-to-animate-festive-svg-icons-with-css--webdesign-17658
 
+//key for OpenWeatherApi, normally do not expose keys
 var APPID = "4ecd95152125036caf092f9322ecc291";
-var temp;
+var tempInC;
+var tempInF;
 var loc;
 var icon;
 var humidity;
 var wind;
 var direction;
 var weather;
+//var tempButton = document.getElementById("tempButton");
+
+//tempButton.onclick = function() {
+//}
 
 //on load
 window.onload = function() {
-  temp = document.getElementById("temperature");
+  tempInC = document.getElementById("temperatureInC");
+  tempInF = document.getElementById("temperatureInF");
   loc = document.getElementById("location");
   icon = document.getElementById("icon");
   humidity =  document.getElementById("humidity");
@@ -46,6 +53,25 @@ window.onload = function() {
   }
     navigator.geolocation.getCurrentPosition(success, error, options);
 }
+
+var tempDiv = document.getElementById('temperatureDiv');
+//var button = document.getElementById('button');
+var divF = document.getElementById('divF');
+divF.style.display = 'none';
+
+tempDiv.onclick = function() {
+    var divC = document.getElementById('divC');
+    if (divC.style.display !== 'none') {
+        divC.style.display = 'none';
+        divF.style.display = 'block';
+    }
+    else {
+        divC.style.display = 'block';
+        divF.style.display = 'none';
+    }
+};
+
+
 
 var options = {
   enableHighAccuracy: true,
@@ -92,7 +118,8 @@ function sendRequest(url){
       weather.wind = data.wind.speed;
       weather.direction = degreesToDirection(data.wind.deg);
       weather.loc = data.name;
-      weather.temp = kToC(data.main.temp);
+      weather.tempInC = kToC(data.main.temp);
+      weather.tempInF = kToF(data.main.temp);
       weather.clouds = data.clouds.all;
       //after object created, pass into function
       update(weather);
@@ -135,7 +162,8 @@ function update(weather){
   direction.innerHTML = weather.direction;
   humidity.innerHTML = weather.humidity;
   loc.innerHTML = weather.loc;
-  temp.innerHTML = weather.temp;
+  tempInC.innerHTML = weather.tempInC;
+  tempInF.innerHTML = weather.tempInF;
   clouds.innerHTML = weather.clouds;
   icon.src = "img/codes/" + weather.icon + ".png";
 }
