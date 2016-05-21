@@ -1,4 +1,5 @@
 //Note: when testing, run python -m SimpleHTTPServer
+//Chrome browser location only works if making call from server, NOT file
 //on window load, get location
 //use API calls to get and parse information as arguments in functions?
 //swap between F and C on button press
@@ -50,22 +51,56 @@ window.onload = function() {
   //pass in params, ex ZIP code or lat/lon
   //updateByLatLon(30, 129);
   //pass in weather conditions
-  if (navigator.geolocation){
-    navigator.geolocation.getCurrentPosition(showPosition);
+  if (navigator.geolocation) {
+    console.log('Geolocation is supported!');
   } else {
-    var lat = window.prompt("Please enable geolocation, or enter your latitude. Latitude:");
-    var lon =  window.prompt("Longitude:");
-    updateByLatLon(lat, lon);
-        alert("Your browser does not support geolocation! >x<");
+    alert("Geolocation is not supported for this browser/OS version yet. Sadface~ >w<");
+    console.log('Geolocation is not supported for this Browser/OS version yet.');
   }
+  //if (navigator.geolocation){
+    //console.log("find meeeee");
+    navigator.geolocation.getCurrentPosition(success, error, options);
+  //} else {
+    //var lat = window.prompt("Please enable geolocation, or enter your latitude. Latitude:");
+    //var lon =  window.prompt("Longitude:");
+    //updateByLatLon(lat, lon);
+    //alert("Your browser does not support geolocation! >x<");
+  //}
+
 }
 
-function showPosition(position){
-  var lat = position.coords.latitude;
-  var lon = position.coords.longitude;
+
+var options = {
+  enableHighAccuracy: true,
+  timeout: 5000,
+  maximumAge: 0
+};
+
+function success(position) {
+  var crd = position.coords;
+
+  console.log('Your current position is:');
+  console.log('Latitude : ' + crd.latitude);
+  console.log('Longitude: ' + crd.longitude);
+  console.log('More or less ' + crd.accuracy + ' meters.');
+
+  var lat = crd.latitude;
+  var lon = crd.longitude;
   updateByGeolocation(lat, lon);
-  console.log(position.coords.latitude);
-}
+  //console.log(position.coords.latitude);
+};
+
+function error(err) {
+  console.warn('ERROR(' + err.code + '): ' + err.message);
+
+};
+
+// function showPosition(position){
+//   var lat = position.coords.latitude;
+//   var lon = position.coords.longitude;
+//   updateByGeolocation(lat, lon);
+//   console.log(position.coords.latitude);
+// }
 
 
 function updateByGeolocation(lat, lon){
