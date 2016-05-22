@@ -22,26 +22,25 @@ var APPID = "4ecd95152125036caf092f9322ecc291";
 var tempInC;
 var tempInF;
 var loc;
+var country;
 var icon;
 var humidity;
 var wind;
 var direction;
 var weather;
-//var tempButton = document.getElementById("tempButton");
-
-//tempButton.onclick = function() {
-//}
 
 //on load
 window.onload = function() {
   tempInC = document.getElementById("temperatureInC");
   tempInF = document.getElementById("temperatureInF");
   loc = document.getElementById("location");
-  icon = document.getElementById("icon");
+  country = document.getElementById("country");
+  //icon = document.getElementById("icon");
   humidity =  document.getElementById("humidity");
   wind = document.getElementById("wind");
   direction = document.getElementById("direction");
   clouds =  document.getElementById("cloudiness");
+  icon =  document.getElementById("weatherIcon");
 
   //pass in params, ex ZIP code or lat/lon
   //pass in weather conditions
@@ -70,8 +69,6 @@ tempDiv.onclick = function() {
         divF.style.display = 'none';
     }
 };
-
-
 
 var options = {
   enableHighAccuracy: true,
@@ -118,6 +115,7 @@ function sendRequest(url){
       weather.wind = data.wind.speed;
       weather.direction = degreesToDirection(data.wind.deg);
       weather.loc = data.name;
+      weather.country = data.sys.country;
       weather.tempInC = kToC(data.main.temp);
       weather.tempInF = kToF(data.main.temp);
       weather.clouds = data.clouds.all;
@@ -162,8 +160,11 @@ function update(weather){
   direction.innerHTML = weather.direction;
   humidity.innerHTML = weather.humidity;
   loc.innerHTML = weather.loc;
+  country.innerHTML = weather.country;
   tempInC.innerHTML = weather.tempInC;
   tempInF.innerHTML = weather.tempInF;
   clouds.innerHTML = weather.clouds;
-  icon.src = "img/codes/" + weather.icon + ".png";
+  //icon.src = "img/codes/" + weather.icon + ".png";
+  document.getElementById("weatherIcon").className = "";
+  document.getElementById("weatherIcon").className = "wi wi-owm-" + weather.icon;
 }
