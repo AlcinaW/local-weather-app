@@ -53,12 +53,22 @@ window.onload = function() {
     navigator.geolocation.getCurrentPosition(success, error, options);
 }
 
-var tempDiv = document.getElementById('temperatureDiv');
+var tempButton = document.getElementById('tempButton');
+
+tempButton.addEventListener('click', function() {
+  if (tempButton.getAttribute("data-text-swap") == tempButton.innerHTML) {
+    tempButton.innerHTML = tempButton.getAttribute("data-text-original");
+  } else {
+    tempButton.setAttribute("data-text-original", tempButton.innerHTML);
+    tempButton.innerHTML = tempButton.getAttribute("data-text-swap");
+  }
+}, false);
+
 //var button = document.getElementById('button');
 var divF = document.getElementById('divF');
 divF.style.display = 'none';
 
-tempDiv.onclick = function() {
+tempButton.onclick = function() {
     var divC = document.getElementById('divC');
     if (divC.style.display !== 'none') {
         divC.style.display = 'none';
