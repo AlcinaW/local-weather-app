@@ -4,7 +4,7 @@
 //use API calls to get and parse information as arguments in functions?
 //swap between F and C on button press
 //if temp > set colour of bg
-//API key: 4ecd95152125036caf092f9322ecc291 (don't expose API keys normally)
+//API key: 4ecd95152125036caf092f9322ecc291 (don"t expose API keys normally)
 //JSON format
 
 //icon image associated with weather -> can use your own
@@ -45,17 +45,17 @@ window.onload = function() {
   //pass in params, ex ZIP code or lat/lon
   //pass in weather conditions
   if (navigator.geolocation) {
-    console.log('Geolocation is supported!');
+    console.log("Geolocation is supported!");
   } else {
     alert("Geolocation is not supported for this browser/OS version yet. Sadface~ >w<");
-    console.log('Geolocation is not supported for this browser/OS version yet. Sadface~ >w<');
+    console.log("Geolocation is not supported for this browser/OS version yet. Sadface~ >w<");
   }
     navigator.geolocation.getCurrentPosition(success, error, options);
 }
 
-var tempButton = document.getElementById('tempButton');
+var tempButton = document.getElementById("tempButton");
 
-tempButton.addEventListener('click', function() {
+tempButton.addEventListener("click", function() {
   if (tempButton.getAttribute("data-text-swap") == tempButton.innerHTML) {
     tempButton.innerHTML = tempButton.getAttribute("data-text-original");
   } else {
@@ -64,19 +64,19 @@ tempButton.addEventListener('click', function() {
   }
 }, false);
 
-//var button = document.getElementById('button');
-var divF = document.getElementById('divF');
-divF.style.display = 'none';
+//var button = document.getElementById("button");
+var divF = document.getElementById("divF");
+divF.style.display = "none";
 
 tempButton.onclick = function() {
-    var divC = document.getElementById('divC');
-    if (divC.style.display !== 'none') {
-        divC.style.display = 'none';
-        divF.style.display = 'block';
+    var divC = document.getElementById("divC");
+    if (divC.style.display !== "none") {
+        divC.style.display = "none";
+        divF.style.display = "block";
     }
     else {
-        divC.style.display = 'block';
-        divF.style.display = 'none';
+        divC.style.display = "block";
+        divF.style.display = "none";
     }
 };
 
@@ -89,10 +89,10 @@ var options = {
 function success(position) {
   var crd = position.coords;
 
-  console.log('Your current position is:');
-  console.log('Latitude : ' + crd.latitude);
-  console.log('Longitude: ' + crd.longitude);
-  console.log('More or less ' + crd.accuracy + ' meters.');
+  console.log("Your current position is:");
+  console.log("Latitude : " + crd.latitude);
+  console.log("Longitude: " + crd.longitude);
+  console.log("More or less " + crd.accuracy + " meters.");
 
   var lat = crd.latitude;
   var lon = crd.longitude;
@@ -100,7 +100,7 @@ function success(position) {
 };
 
 function error(err) {
-  console.warn('ERROR(' + err.code + '): ' + err.message);
+  console.warn("ERROR(" + err.code + "): " + err.message);
 
 };
 
