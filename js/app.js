@@ -38,27 +38,6 @@ window.onload = function() {
     navigator.geolocation.getCurrentPosition(success, error, options);
 }
 
-tempButton.addEventListener("click", function() {
-  if (tempButton.getAttribute("data-text-swap") == tempButton.innerHTML) {
-    tempButton.innerHTML = tempButton.getAttribute("data-text-original");
-  } else {
-    tempButton.setAttribute("data-text-original", tempButton.innerHTML);
-    tempButton.innerHTML = tempButton.getAttribute("data-text-swap");
-  }
-}, false);
-
-tempButton.onclick = function() {
-    var divC = document.getElementById("divC");
-    if (divC.style.display !== "none") {
-        divC.style.display = "none";
-        divF.style.display = "block";
-    }
-    else {
-        divC.style.display = "block";
-        divF.style.display = "none";
-    }
-};
-
 var options = {
   enableHighAccuracy: true,
   timeout: 5000,
@@ -76,12 +55,11 @@ function success(position) {
   var lat = crd.latitude;
   var lon = crd.longitude;
   updateByGeolocation(lat, lon);
-};
+}
 
 function error(err) {
   console.warn("ERROR(" + err.code + "): " + err.message);
-
-};
+}
 
 function updateByGeolocation(lat, lon){
   var url = "http://api.openweathermap.org/data/2.5/weather" + "?lat=" + lat + "&lon=" + lon + "&APPID=" + APPID;
@@ -157,3 +135,24 @@ function update(weather){
   document.getElementById("weatherIcon").className = "";
   document.getElementById("weatherIcon").className = "wi wi-owm-" + weather.icon;
 }
+
+tempButton.addEventListener("click", function() {
+  if (tempButton.getAttribute("data-text-swap") == tempButton.innerHTML) {
+    tempButton.innerHTML = tempButton.getAttribute("data-text-original");
+  } else {
+    tempButton.setAttribute("data-text-original", tempButton.innerHTML);
+    tempButton.innerHTML = tempButton.getAttribute("data-text-swap");
+  }
+}, false);
+
+tempButton.onclick = function() {
+    var divC = document.getElementById("divC");
+    if (divC.style.display !== "none") {
+        divC.style.display = "none";
+        divF.style.display = "block";
+    }
+    else {
+        divC.style.display = "block";
+        divF.style.display = "none";
+    }
+};
