@@ -1,23 +1,7 @@
-//Note: when testing, run python -m SimpleHTTPServer
-//Chrome browser location only works if making call from server, NOT file
-//on window load, get location
-//use API calls to get and parse information as arguments in functions?
-//swap between F and C on button press
-//if temp > set colour of bg
-//API key: 4ecd95152125036caf092f9322ecc291 (don"t expose API keys normally)
-//JSON format
 
-//icon image associated with weather -> can use your own
+// Weather icons: https://erikflowers.github.io/weather-icons/
 
-//var apiLink = "http://api.openweathermap.org/data/2.5/weather?q=";
-//var apiKey = "&APPID=4ecd95152125036caf092f9322ecc291";
-//?lat=35&lon=139
-
-// weather icons: https://erikflowers.github.io/weather-icons/
-//weather api list: https://erikflowers.github.io/weather-icons/api-list.html
-//animate SVG: http://webdesign.tutsplus.com/tutorials/how-to-animate-festive-svg-icons-with-css--webdesign-17658
-
-//key for OpenWeatherApi, normally do not expose keys
+//key for OpenWeatherMap, normally do not expose keys
 var APPID = "4ecd95152125036caf092f9322ecc291";
 var tempInC;
 var tempInF;
@@ -28,6 +12,9 @@ var humidity;
 var wind;
 var direction;
 var weather;
+var tempButton = document.getElementById("tempButton");
+var divF = document.getElementById("divF");
+divF.style.display = "none";
 
 //on load
 window.onload = function() {
@@ -35,7 +22,6 @@ window.onload = function() {
   tempInF = document.getElementById("temperatureInF");
   loc = document.getElementById("location");
   country = document.getElementById("country");
-  //icon = document.getElementById("icon");
   humidity =  document.getElementById("humidity");
   wind = document.getElementById("wind");
   direction = document.getElementById("direction");
@@ -43,7 +29,6 @@ window.onload = function() {
   icon =  document.getElementById("weatherIcon");
 
   //pass in params, ex ZIP code or lat/lon
-  //pass in weather conditions
   if (navigator.geolocation) {
     console.log("Geolocation is supported!");
   } else {
@@ -53,8 +38,6 @@ window.onload = function() {
     navigator.geolocation.getCurrentPosition(success, error, options);
 }
 
-var tempButton = document.getElementById("tempButton");
-
 tempButton.addEventListener("click", function() {
   if (tempButton.getAttribute("data-text-swap") == tempButton.innerHTML) {
     tempButton.innerHTML = tempButton.getAttribute("data-text-original");
@@ -63,10 +46,6 @@ tempButton.addEventListener("click", function() {
     tempButton.innerHTML = tempButton.getAttribute("data-text-swap");
   }
 }, false);
-
-//var button = document.getElementById("button");
-var divF = document.getElementById("divF");
-divF.style.display = "none";
 
 tempButton.onclick = function() {
     var divC = document.getElementById("divC");
@@ -174,7 +153,7 @@ function update(weather){
   tempInC.innerHTML = weather.tempInC;
   tempInF.innerHTML = weather.tempInF;
   clouds.innerHTML = weather.clouds;
-  //icon.src = "img/codes/" + weather.icon + ".png";
+
   document.getElementById("weatherIcon").className = "";
   document.getElementById("weatherIcon").className = "wi wi-owm-" + weather.icon;
 }
