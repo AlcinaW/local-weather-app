@@ -1,3 +1,5 @@
-#Local weather app (w.i.p.)
+#Local weather app
 
-What do you think the weather will be like today? 
+A local weather app that determines your location, and returns information on the current weather. Built with JavaScript, Open Weather Map API, and Responsive Grid System.
+
+View the demo on [Codepen](http://codepen.io/AlcinaW/full/QNedKR).
