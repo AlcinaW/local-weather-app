@@ -1,51 +1,63 @@
-//Note: when testing, run python -m SimpleHTTPServer
-//Chrome browser location only works if making call from server, NOT file
-//on window load, get location
-//use API calls to get and parse information as arguments in functions?
-//swap between F and C on button press
-//if temp > set colour of bg
-//API key: 4ecd95152125036caf092f9322ecc291 (don't expose API keys normally)
-//JSON format
 
-//icon image associated with weather -> can use your own
+// Weather icons: https://erikflowers.github.io/weather-icons/
 
-//var apiLink = "http://api.openweathermap.org/data/2.5/weather?q=";
-//var apiKey = "&APPID=4ecd95152125036caf092f9322ecc291";
-//?lat=35&lon=139
-
-// weather icons: https://erikflowers.github.io/weather-icons/
-//weather api list: https://erikflowers.github.io/weather-icons/api-list.html
-//animate SVG: http://webdesign.tutsplus.com/tutorials/how-to-animate-festive-svg-icons-with-css--webdesign-17658
-
+//key for OpenWeatherMap, normally do not expose keys
 var APPID = "4ecd95152125036caf092f9322ecc291";
-var temp;
+var tempInC;
+var tempInF;
 var loc;
+var country;
 var icon;
 var humidity;
 var wind;
 var direction;
 var weather;
+var tempButton = document.getElementById("tempButton");
+var divF = document.getElementById("divF");
+divF.style.display = "none";
 
 //on load
 window.onload = function() {
-  temp = document.getElementById("temperature");
+  tempInC = document.getElementById("temperatureInC");
+  tempInF = document.getElementById("temperatureInF");
   loc = document.getElementById("location");
-  icon = document.getElementById("icon");
+  country = document.getElementById("country");
   humidity =  document.getElementById("humidity");
   wind = document.getElementById("wind");
   direction = document.getElementById("direction");
   clouds =  document.getElementById("cloudiness");
+  icon =  document.getElementById("weatherIcon");
 
   //pass in params, ex ZIP code or lat/lon
-  //pass in weather conditions
   if (navigator.geolocation) {
-    console.log('Geolocation is supported!');
+    console.log("Geolocation is supported!");
   } else {
     alert("Geolocation is not supported for this browser/OS version yet. Sadface~ >w<");
-    console.log('Geolocation is not supported for this browser/OS version yet. Sadface~ >w<');
+    console.log("Geolocation is not supported for this browser/OS version yet. Sadface~ >w<");
   }
     navigator.geolocation.getCurrentPosition(success, error, options);
 }
+
+tempButton.addEventListener("click", function() {
+  if (tempButton.getAttribute("data-text-swap") == tempButton.innerHTML) {
+    tempButton.innerHTML = tempButton.getAttribute("data-text-original");
+  } else {
+    tempButton.setAttribute("data-text-original", tempButton.innerHTML);
+    tempButton.innerHTML = tempButton.getAttribute("data-text-swap");
+  }
+}, false);
+
+tempButton.onclick = function() {
+    var divC = document.getElementById("divC");
+    if (divC.style.display !== "none") {
+        divC.style.display = "none";
+        divF.style.display = "block";
+    }
+    else {
+        divC.style.display = "block";
+        divF.style.display = "none";
+    }
+};
 
 var options = {
   enableHighAccuracy: true,
@@ -56,10 +68,10 @@ var options = {
 function success(position) {
   var crd = position.coords;
 
-  console.log('Your current position is:');
-  console.log('Latitude : ' + crd.latitude);
-  console.log('Longitude: ' + crd.longitude);
-  console.log('More or less ' + crd.accuracy + ' meters.');
+  console.log("Your current position is:");
+  console.log("Latitude : " + crd.latitude);
+  console.log("Longitude: " + crd.longitude);
+  console.log("More or less " + crd.accuracy + " meters.");
 
   var lat = crd.latitude;
   var lon = crd.longitude;
@@ -67,7 +79,7 @@ function success(position) {
 };
 
 function error(err) {
-  console.warn('ERROR(' + err.code + '): ' + err.message);
+  console.warn("ERROR(" + err.code + "): " + err.message);
 
 };
 
@@ -92,7 +104,9 @@ function sendRequest(url){
       weather.wind = data.wind.speed;
       weather.direction = degreesToDirection(data.wind.deg);
       weather.loc = data.name;
-      weather.temp = kToC(data.main.temp);
+      weather.country = data.sys.country;
+      weather.tempInC = kToC(data.main.temp);
+      weather.tempInF = kToF(data.main.temp);
       weather.clouds = data.clouds.all;
       //after object created, pass into function
       update(weather);
@@ -135,7 +149,11 @@ function update(weather){
   direction.innerHTML = weather.direction;
   humidity.innerHTML = weather.humidity;
   loc.innerHTML = weather.loc;
-  temp.innerHTML = weather.temp;
+  country.innerHTML = weather.country;
+  tempInC.innerHTML = weather.tempInC;
+  tempInF.innerHTML = weather.tempInF;
   clouds.innerHTML = weather.clouds;
-  icon.src = "img/codes/" + weather.icon + ".png";
+
+  document.getElementById("weatherIcon").className = "";
+  document.getElementById("weatherIcon").className = "wi wi-owm-" + weather.icon;
 }
